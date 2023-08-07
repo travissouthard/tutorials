@@ -1,20 +1,16 @@
 const width = 10;
 const boardSize = width * width;
-const bombCount = 20;
+const bombCount = { easy: 10, medium: 20, hard: 40 };
+let difficulty = "easy";
 const validCount = boardSize - bombCount;
 const squareValues = [];
 let isGameOver = false;
 
-for (let i = 0; i < boardSize; i++) {
-    if (i < bombCount) {
-        squareValues.push("bomb");
-    } else {
-        squareValues.push("valid");
-    }
-}
-
 const board = document.getElementById("board");
 const reset = document.getElementById("reset");
+const easy = document.getElementById("easy");
+const medium = document.getElementById("medium");
+const hard = document.getElementById("hard");
 
 const shuffleValues = () => {
     for (let i = 0; i < squareValues.length; i++) {
@@ -28,6 +24,14 @@ const shuffleValues = () => {
 const resetGame = () => {
     isGameOver = false;
     board.innerHTML = "";
+    squareValues.length = 0;
+    for (let i = 0; i < boardSize; i++) {
+        if (i < bombCount[difficulty]) {
+            squareValues.push("bomb");
+        } else {
+            squareValues.push("valid");
+        }
+    }
 };
 
 const checkNeighbors = (squareObj) => {
@@ -96,5 +100,14 @@ const createBoard = () => {
     }
 };
 
+const setDifficultyAndReset = (difficultyStr) => {
+    difficulty = difficultyStr;
+    console.log(difficulty);
+    createBoard();
+};
+
 reset.addEventListener("click", createBoard);
+easy.addEventListener("click", () => setDifficultyAndReset("easy"));
+medium.addEventListener("click", () => setDifficultyAndReset("medium"));
+hard.addEventListener("click", () => setDifficultyAndReset("hard"));
 createBoard();
