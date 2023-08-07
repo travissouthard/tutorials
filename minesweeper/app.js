@@ -3,6 +3,7 @@ const boardSize = width * width;
 const bombCount = 20;
 const validCount = boardSize - bombCount;
 const squareValues = [];
+let isGameOver = false;
 
 for (let i = 0; i < boardSize; i++) {
     if (i < bombCount) {
@@ -13,6 +14,7 @@ for (let i = 0; i < boardSize; i++) {
 }
 
 const board = document.getElementById("board");
+const reset = document.getElementById("reset");
 
 const shuffleValues = () => {
     for (let i = 0; i < squareValues.length; i++) {
@@ -23,7 +25,18 @@ const shuffleValues = () => {
     }
 };
 
+const resetGame = () => {
+    isGameOver = false;
+    board.innerHTML = "";
+};
+
 const handleClick = (squareObj) => {
+    if (isGameOver) return;
+    if (squareObj.classList.contains("bomb")) {
+        isGameOver = true;
+        squareObj.innerHTML = "💥";
+    }
+
     const clickedClass = "clicked";
     if (!squareObj.classList.contains(clickedClass)) {
         squareObj.classList.add(clickedClass);
@@ -31,14 +44,18 @@ const handleClick = (squareObj) => {
 };
 
 const createBoard = () => {
+    resetGame();
     shuffleValues();
-    for (let value of squareValues) {
+    for (let i = 0; i < squareValues.length; i++) {
+        let value = squareValues[i];
         const square = document.createElement("p");
         square.innerHTML = value === "bomb" ? "💣" : "😀";
+        square.id = `${i}`;
         square.classList.add(value);
         square.addEventListener("click", () => handleClick(square));
         board.appendChild(square);
     }
 };
 
+reset.addEventListener("click", createBoard);
 createBoard();
