@@ -32,18 +32,24 @@ const resetGame = () => {
 
 const checkNeighbors = (squareObj) => {
     const index = parseInt(squareObj.id);
-    const neighborIndexes = [
-        index - width - 1,
-        index - width,
-        index - width + 1,
-        index - 1,
-        index + 1,
-        index + width - 1,
-        index + width,
-        index + width + 1,
+    const leftEdge = index % width === 0;
+    const rightEdge = (index + 1) % width === 0;
+    const topEdge = index < width;
+    const bottomEdge = index >= boardSize - width;
+    const neighborEdgesAndIndexes = [
+        [!leftEdge && !topEdge, index - width - 1],
+        [!topEdge, index - width],
+        [!rightEdge && !topEdge, index - width + 1],
+        [!leftEdge, index - 1],
+        [!rightEdge, index + 1],
+        [!leftEdge && !bottomEdge, index + width - 1],
+        [!bottomEdge, index + width],
+        [!rightEdge && !bottomEdge, index + width + 1],
     ];
+
     let count = 0;
-    for (let neighborId of neighborIndexes) {
+    for (let [shouldCheck, neighborId] of neighborEdgesAndIndexes) {
+        if (!shouldCheck) continue;
         const neighbor = document.getElementById(`${neighborId}`);
         if (neighbor && neighbor.classList.contains("bomb")) {
             count++;
