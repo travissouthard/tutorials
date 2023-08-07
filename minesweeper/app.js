@@ -77,6 +77,11 @@ const handleClick = (squareObj) => {
     if (isGameOver) return;
     if (squareObj.classList.contains("bomb")) {
         isGameOver = true;
+        const bombs = document.querySelectorAll(".bomb");
+        bombs.forEach((bomb) => {
+            bomb.innerHTML = "💣";
+            bomb.classList.add("clicked");
+        });
         squareObj.innerHTML = "💥";
     }
 
@@ -94,7 +99,6 @@ const createBoard = () => {
         const square = document.createElement("p");
         square.id = `${i}`;
         square.classList.add(value);
-        square.classList.add(value === "bomb" ? "💣" : "😀");
         square.addEventListener("click", () => handleClick(square));
         board.appendChild(square);
     }
@@ -102,7 +106,6 @@ const createBoard = () => {
 
 const setDifficultyAndReset = (difficultyStr) => {
     difficulty = difficultyStr;
-    console.log(difficulty);
     createBoard();
 };
 
