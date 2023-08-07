@@ -23,18 +23,20 @@ const shuffleValues = () => {
     }
 };
 
+const handleClick = (squareObj) => {
+    const clickedClass = "clicked";
+    if (!squareObj.classList.contains(clickedClass)) {
+        squareObj.classList.add(clickedClass);
+    }
+};
+
 const createBoard = () => {
     shuffleValues();
     for (let value of squareValues) {
-        const clickedClass = "clicked";
         const square = document.createElement("p");
         square.innerHTML = value === "bomb" ? "💣" : "😀";
         square.classList.add(value);
-        square.addEventListener("click", (e) => {
-            if (!square.classList.contains(clickedClass)) {
-                square.classList.add(clickedClass);
-            }
-        });
+        square.addEventListener("click", () => handleClick(square));
         board.appendChild(square);
     }
 };
