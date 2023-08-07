@@ -47,13 +47,22 @@ const checkNeighbors = (squareObj) => {
         [!rightEdge && !bottomEdge, index + width + 1],
     ];
 
+    const doForEachNeighbor = (callBack) => {
+        for (let [shouldCheck, neighborId] of neighborEdgesAndIndexes) {
+            if (!shouldCheck) continue;
+            const neighbor = document.getElementById(`${neighborId}`);
+            callBack(neighbor);
+        }
+    };
+
     let count = 0;
-    for (let [shouldCheck, neighborId] of neighborEdgesAndIndexes) {
-        if (!shouldCheck) continue;
-        const neighbor = document.getElementById(`${neighborId}`);
-        if (neighbor && neighbor.classList.contains("bomb")) {
+    doForEachNeighbor((neighborObj) => {
+        if (neighborObj.classList.contains("bomb")) {
             count++;
         }
+    });
+    if (count === 0) {
+        doForEachNeighbor((neighborObj) => handleClick(neighborObj));
     }
     squareObj.innerHTML = `${count}`;
 };
@@ -65,10 +74,9 @@ const handleClick = (squareObj) => {
         squareObj.innerHTML = "💥";
     }
 
-    const clickedClass = "clicked";
-    if (!squareObj.classList.contains(clickedClass)) {
+    if (!squareObj.classList.contains("clicked")) {
+        squareObj.classList.add("clicked");
         checkNeighbors(squareObj);
-        squareObj.classList.add(clickedClass);
     }
 };
 
