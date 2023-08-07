@@ -4,6 +4,7 @@ const bombCount = { easy: 10, medium: 20, hard: 40 };
 let difficulty = "easy";
 const validCount = boardSize - bombCount;
 const squareValues = [];
+let flagsLeft = 0;
 let isGameOver = false;
 
 const board = document.getElementById("board");
@@ -11,6 +12,7 @@ const reset = document.getElementById("reset");
 const easy = document.getElementById("easy");
 const medium = document.getElementById("medium");
 const hard = document.getElementById("hard");
+const flagCounter = document.getElementById("flagCounter");
 
 const shuffleValues = () => {
     for (let i = 0; i < squareValues.length; i++) {
@@ -21,10 +23,16 @@ const shuffleValues = () => {
     }
 };
 
+const updateFlagCounter = () => {
+    flagCounter.innerHTML = `Flags left: ${flagsLeft}`;
+};
+
 const resetGame = () => {
     isGameOver = false;
     board.innerHTML = "";
     squareValues.length = 0;
+    flagsLeft = bombCount[difficulty];
+    updateFlagCounter();
     for (let i = 0; i < boardSize; i++) {
         if (i < bombCount[difficulty]) {
             squareValues.push("bomb");
@@ -95,8 +103,17 @@ const handlePlaceFlag = (e, squareObj) => {
     e.preventDefault();
     if (isGameOver) return;
     if (!squareObj.classList.contains("clicked")) {
-        squareObj.innerHTML = squareObj.classList.contains("flag") ? "🚩" : "";
-        squareObj.classList.toggle("flag");
+        if (squareObj.classList.contains("flag")) {
+            squareObj.innerHTML = "";
+            squareObj.classList.remove("flag");
+            flagsLeft++;
+            updateFlagCounter();
+        } else if (flagsLeft > 0) {
+            squareObj.innerHTML = "🚩";
+            squareObj.classList.add("flag");
+            flagsLeft--;
+            updateFlagCounter();
+        }
     }
 };
 
