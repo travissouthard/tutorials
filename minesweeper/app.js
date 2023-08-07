@@ -61,10 +61,12 @@ const checkNeighbors = (squareObj) => {
             count++;
         }
     });
-    if (count === 0) {
+
+    if (count > 0) {
+        squareObj.innerHTML = `${count}`;
+    } else {
         doForEachNeighbor((neighborObj) => handleClick(neighborObj));
     }
-    squareObj.innerHTML = `${count}`;
 };
 
 const handleClick = (squareObj) => {
@@ -86,8 +88,6 @@ const createBoard = () => {
     for (let i = 0; i < squareValues.length; i++) {
         let value = squareValues[i];
         const square = document.createElement("p");
-        // square.innerHTML = value === "bomb" ? "💣" : "😀";
-        square.innerHTML = `${i}`;
         square.id = `${i}`;
         square.classList.add(value);
         square.classList.add(value === "bomb" ? "💣" : "😀");
