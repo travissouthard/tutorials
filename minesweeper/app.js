@@ -14,7 +14,17 @@ for (let i = 0; i < boardSize; i++) {
 
 const board = document.getElementById("board");
 
+const shuffleValues = () => {
+    for (let i = 0; i < squareValues.length; i++) {
+        const randomIndex = Math.floor(Math.random() * squareValues.length);
+        let temp = squareValues[i];
+        squareValues[i] = squareValues[randomIndex];
+        squareValues[randomIndex] = temp;
+    }
+};
+
 const createBoard = () => {
+    shuffleValues();
     for (let value of squareValues) {
         const clickedClass = "clicked";
         const square = document.createElement("p");
