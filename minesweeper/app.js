@@ -30,6 +30,28 @@ const resetGame = () => {
     board.innerHTML = "";
 };
 
+const checkNeighbors = (squareObj) => {
+    const index = parseInt(squareObj.id);
+    const neighborIndexes = [
+        index - width - 1,
+        index - width,
+        index - width + 1,
+        index - 1,
+        index + 1,
+        index + width - 1,
+        index + width,
+        index + width + 1,
+    ];
+    let count = 0;
+    for (let neighborId of neighborIndexes) {
+        const neighbor = document.getElementById(`${neighborId}`);
+        if (neighbor && neighbor.classList.contains("bomb")) {
+            count++;
+        }
+    }
+    squareObj.innerHTML = `${count}`;
+};
+
 const handleClick = (squareObj) => {
     if (isGameOver) return;
     if (squareObj.classList.contains("bomb")) {
@@ -39,6 +61,7 @@ const handleClick = (squareObj) => {
 
     const clickedClass = "clicked";
     if (!squareObj.classList.contains(clickedClass)) {
+        checkNeighbors(squareObj);
         squareObj.classList.add(clickedClass);
     }
 };
@@ -49,9 +72,11 @@ const createBoard = () => {
     for (let i = 0; i < squareValues.length; i++) {
         let value = squareValues[i];
         const square = document.createElement("p");
-        square.innerHTML = value === "bomb" ? "💣" : "😀";
+        // square.innerHTML = value === "bomb" ? "💣" : "😀";
+        square.innerHTML = `${i}`;
         square.id = `${i}`;
         square.classList.add(value);
+        square.classList.add(value === "bomb" ? "💣" : "😀");
         square.addEventListener("click", () => handleClick(square));
         board.appendChild(square);
     }
