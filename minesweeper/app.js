@@ -91,6 +91,15 @@ const handleClick = (squareObj) => {
     }
 };
 
+const handlePlaceFlag = (e, squareObj) => {
+    e.preventDefault();
+    if (isGameOver) return;
+    if (!squareObj.classList.contains("clicked")) {
+        squareObj.innerHTML = squareObj.classList.contains("flag") ? "🚩" : "";
+        squareObj.classList.toggle("flag");
+    }
+};
+
 const createBoard = () => {
     resetGame();
     shuffleValues();
@@ -100,6 +109,9 @@ const createBoard = () => {
         square.id = `${i}`;
         square.classList.add(value);
         square.addEventListener("click", () => handleClick(square));
+        square.addEventListener("contextmenu", (e) =>
+            handlePlaceFlag(e, square)
+        );
         board.appendChild(square);
     }
 };
