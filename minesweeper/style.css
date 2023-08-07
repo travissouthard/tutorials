@@ -2,6 +2,10 @@ h1 {
     text-align: center;
 }
 
+.clicked {
+    background-color: green;
+}
+
 #board {
     width: 500px;
     margin: 0 auto;
