@@ -2,29 +2,33 @@ h1 {
     text-align: center;
 }
 
-.clicked {
-    background-color: green;
-    color: white;
-}
-
-.bomb {
-    background-color: pink;
-}
-
 #board {
     width: 500px;
     margin: 0 auto;
-    border: 1px solid black;
     display: flex;
     flex-flow: row wrap;
+    border-top: 4px solid lightgray;
+    border-right: 4px solid gray;
+    border-bottom: 4px solid gray;
+    border-left: 4px solid lightgray;
 }
 
 #board p {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     margin: 0;
     padding: 0;
-    line-height: 48px;
+    line-height: 42px;
     text-align: center;
-    border: 1px solid gray;
+    background-color: darkgray;
+    border-top: 4px solid lightgray;
+    border-right: 4px solid gray;
+    border-bottom: 4px solid gray;
+    border-left: 4px solid lightgray;
+}
+
+#board .clicked {
+    width: 50px;
+    height: 50px;
+    border: none;
 }
