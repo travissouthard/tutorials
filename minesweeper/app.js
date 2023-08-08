@@ -74,6 +74,16 @@ const checkNeighbors = (squareObj) => {
         [!bottomEdge, index + width],
         [!rightEdge && !bottomEdge, index + width + 1],
     ];
+    const numberClasses = [
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+    ];
 
     const doForEachNeighbor = (callBack) => {
         for (let [shouldCheck, neighborId] of neighborEdgesAndIndexes) {
@@ -92,6 +102,7 @@ const checkNeighbors = (squareObj) => {
 
     if (count > 0) {
         squareObj.innerHTML = `${count}`;
+        squareObj.classList.add(numberClasses[count - 1]);
     } else {
         doForEachNeighbor((neighborObj) => handleClick(neighborObj));
     }

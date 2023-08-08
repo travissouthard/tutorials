@@ -1,5 +1,41 @@
+html {
+    font-family: monospace;
+}
+
 h1 {
     text-align: center;
+}
+
+.one {
+    color: blue;
+}
+
+.two {
+    color: green;
+}
+
+.three {
+    color: yellow;
+}
+
+.four {
+    color: orange;
+}
+
+.five {
+    color: red;
+}
+
+.six {
+    color: purple;
+}
+
+.seven {
+    color: pink;
+}
+
+.eight {
+    color: blue;
 }
 
 #board {
