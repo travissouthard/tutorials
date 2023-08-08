@@ -42,6 +42,22 @@ const resetGame = () => {
     }
 };
 
+const checkForWin = () => {
+    const flaggedBombsCount = document.querySelectorAll(".flag.bomb").length;
+    const clickedCount = document.querySelectorAll(".clicked").length;
+    if (
+        flaggedBombsCount === bombCount[difficulty] ||
+        clickedCount === boardSize - bombCount[difficulty]
+    ) {
+        isGameOver = true;
+        document.querySelector("h1").innerHTML = "You win!";
+        document.querySelectorAll(".bomb").forEach((b) => (b.innerHTML = "💣"));
+        document
+            .querySelectorAll("#board p")
+            .forEach((p) => p.classList.add("clicked"));
+    }
+};
+
 const checkNeighbors = (squareObj) => {
     const index = parseInt(squareObj.id);
     const leftEdge = index % width === 0;
@@ -97,6 +113,7 @@ const handleClick = (squareObj) => {
         squareObj.classList.add("clicked");
         checkNeighbors(squareObj);
     }
+    checkForWin();
 };
 
 const handlePlaceFlag = (e, squareObj) => {
@@ -115,6 +132,7 @@ const handlePlaceFlag = (e, squareObj) => {
             updateFlagCounter();
         }
     }
+    checkForWin();
 };
 
 const createBoard = () => {
